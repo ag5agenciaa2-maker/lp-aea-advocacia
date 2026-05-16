@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System | A&A Advocacia Especializada</title>
+
+    <!-- Fontes do Projeto Principal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================
+           RESET & TOKENS DE DOCUMENTAÇÃO (BASEADOS NO PROJETO ORIGINAL)
+           ========================================================== */
+        :root {
+            /* Cores Primárias */
+            --color-primary: #1a4a5a;
+            --color-primary-dark: #0d2d38;
+            --color-primary-darker: #061a21;
+            --color-primary-light: #2d6a7a;
+            --color-primary-lighter: #3d8a9a;
+
+            /* Cores de Destaque */
+            --color-gold: #c9a962;
+            --color-gold-light: #e0c078;
+            --color-gold-dark: #a68a4a;
+            --color-copper: #b8956a;
+            --color-bronze: #9a7a52;
+
+            /* Neutras */
+            --color-silver: #c0c5ce;
+            --color-platinum: #e8eaed;
+            --color-white: #ffffff;
+            --color-cream: #faf9f7;
+            --color-ivory: #f5f4f2;
+            --color-text: #1a1a1a;
+            --color-text-muted: #7a7a7a;
+            --color-border: rgba(26, 74, 90, 0.12);
+            --color-bg: #fafbfc;
+            --color-bg-dark: #0d2d38;
+
+            /* Gradientes */
+            --gradient-gold: linear-gradient(135deg, #c9a962 0%, #e0c078 25%, #c9a962 50%, #a68a4a 75%, #c9a962 100%);
+            --gradient-gold-shine: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+            --gradient-teal: linear-gradient(135deg, #1a4a5a 0%, #2d6a7a 50%, #0d2d38 100%);
+            --gradient-dark: linear-gradient(180deg, #0d2d38 0%, #061a21 100%);
+
+            /* Tipografia */
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            --font-accent: 'Crimson Pro', serif;
+
+            /* Sombras e Raios */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 2px 8px rgba(13, 45, 56, 0.06);
+            --shadow-md: 0 8px 24px rgba(13, 45, 56, 0.08);
+            --shadow-gold: 0 8px 32px rgba(201, 169, 98, 0.25);
+            --shadow-gold-lg: 0 12px 40px rgba(201, 169, 98, 0.35);
+            
+            /* Utils doc */
+            --ds-sidebar-width: 280px;
+        }
+
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+        }
+
+        /* Textura Noise Otimizada */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.012; pointer-events: none; z-index: 9999;
+        }
+
+        /* ==========================================================
+           LAYOUT DA DOCUMENTAÇÃO
+           ========================================================== */
+        
+        .ds-sidebar {
+            width: var(--ds-sidebar-width);
+            height: 100vh;
+            position: fixed;
+            top: 0; left: 0;
+            background: var(--color-primary-darker);
+            color: var(--color-white);
+            padding: 40px 24px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(201, 169, 98, 0.15);
+        }
+
+        .ds-logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-gold);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 24px;
+        }
+
+        .ds-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ds-nav-link {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .ds-nav-link:hover, .ds-nav-link.active {
+            color: var(--color-white);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .ds-nav-link::before {
+            content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            width: 3px; height: 0; background: var(--gradient-gold); transition: height 0.3s ease;
+        }
+
+        .ds-nav-link:hover::before, .ds-nav-link.active::before { height: 100%; }
+
+        .ds-main {
+            flex: 1;
+            margin-left: var(--ds-sidebar-width);
+            padding: 60px 80px;
+            max-width: 1200px;
+        }
+
+        /* ==========================================================
+           COMPONENTES DE DOCUMENTAÇÃO
+           ========================================================== */
+        
+        .ds-section {
+            margin-bottom: 80px;
+            background: var(--color-white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+        }
+
+        .ds-section-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: var(--color-primary-dark);
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: 16px;
+        }
+
+        .ds-section-desc {
+            color: var(--color-text-muted);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        /* Cores */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .color-card {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+            transition: transform 0.3s ease;
+        }
+
+        .color-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+        .color-swatch { height: 120px; width: 100%; }
+        
+        .color-info {
+            padding: 16px;
+            background: var(--color-white);
+        }
+
+        .color-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+        .color-hex { font-family: monospace; color: var(--color-text-muted); font-size: 0.85rem; }
+
+        /* Tipografia */
+        .type-specimen {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+            background: var(--color-bg);
+            overflow: hidden;
+        }
+
+        .type-header {
+            padding: 16px 24px;
+            background: var(--color-border);
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--color-primary-dark);
+            font-weight: 600;
+        }
+
+        .type-body { padding: 32px 24px; }
+        
+        .type-display { font-family: var(--font-display); font-size: 3.5rem; line-height: 1.2; color: var(--color-primary-darker); margin-bottom: 12px; }
+        .type-h2 { font-family: var(--font-display); font-size: 2.4rem; color: var(--color-primary-dark); margin-bottom: 12px; }
+        .type-large { font-family: var(--font-body); font-size: 1.15rem; color: var(--color-text); margin-bottom: 12px; }
+        .type-base { font-family: var(--font-body); font-size: 1rem; color: var(--color-text-muted); }
+        .type-accent { font-family: var(--font-accent); font-size: 1.25rem; font-style: italic; color: var(--color-gold-dark); border-left: 3px solid var(--color-gold); padding-left: 16px;}
+
+        /* Elementos IDÊNTICOS do style.css original */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.875rem 2rem; font-weight: 600; font-size: 0.95rem;
+            border-radius: var(--radius-md); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 50px; text-align: center; letter-spacing: 0.5px;
+            font-family: var(--font-body); cursor: pointer; position: relative; overflow: hidden;
+            text-decoration: none; border: none;
+        }
+
+        .btn-primary { background: var(--gradient-gold); color: var(--color-primary-darker); box-shadow: var(--shadow-gold); }
+        
+        .metallic-shine::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: var(--gradient-gold-shine); transform: rotate(30deg) translateX(-100%);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;
+        }
+        .btn-primary.metallic-shine:hover::after { transform: rotate(30deg) translateX(100%); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: var(--shadow-gold-lg); }
+
+        .btn-secondary { background: transparent; border: 2px solid var(--color-gold); color: var(--color-gold-dark); }
+        .btn-secondary:hover { background: var(--color-gold); color: var(--color-primary-darker); transform: translateY(-2px); }
+
+        .btn-outline { background: transparent; border: 2px solid var(--color-primary); color: var(--color-primary); }
+        .btn-outline:hover { background: var(--color-primary); color: var(--color-white); transform: translateY(-2px); }
+
+        .buttons-showcase { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; padding: 40px; background: var(--color-ivory); border-radius: var(--radius-md); }
+
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            text-transform: uppercase; letter-spacing: 3px;
+            color: var(--color-gold); font-weight: 600; font-size: 0.75rem;
+        }
+        .section-tag::before { content: ''; width: 40px; height: 2px; background: var(--gradient-gold); }
+        .section-tag::after { content: ''; width: 8px; height: 8px; background: var(--color-gold); transform: rotate(45deg); }
+
+        /* Icon Cards */
+        .area-card {
+            background: var(--color-white); padding: 32px; border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md); transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative; overflow: hidden; border: 1px solid rgba(201, 169, 98, 0.1);
+            max-width: 320px;
+        }
+        .area-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(201, 169, 98, 0.3); }
+        .area-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient-gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+        .area-card:hover::before { transform: scaleX(1); }
+        
+        .area-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(201, 169, 98, 0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; transition: transform 0.4s ease; border: 1px solid rgba(201, 169, 98, 0.2); }
+        .area-card:hover .area-icon { transform: scale(1.1); background: var(--color-gold); }
+        .area-card:hover .area-icon svg path, .area-card:hover .area-icon svg rect, .area-card:hover .area-icon svg circle { stroke: var(--color-primary-darker); fill: none; }
+        
+        .area-title { font-family: var(--font-display); font-size: 1.4rem; color: var(--color-primary-dark); margin-bottom: 12px; transition: color 0.3s ease; }
+        .area-desc { color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 24px; transition: color 0.3s ease; }
+
+        .cards-showcase { padding: 40px; background: var(--color-bg-dark); border-radius: var(--radius-md); display: flex; justify-content: center; }
+        .cards-showcase .area-title, .cards-showcase .area-desc { color: var(--color-white); }
+        .cards-showcase .area-desc { opacity: 0.7; }
+
+        /* Glassmorphism */
+        .glass-showcase {
+            background-image: url('https://storage.googleapis.com/msgsndr/7hzaWcGgawCV1WudlwA7/media/698e3aca18c517ed8acb0fdc.webp');
+            background-size: cover; background-position: center; border-radius: var(--radius-md);
+            padding: 60px; display: flex; gap: 40px; justify-content: center; align-items: center;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85); border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px; border-radius: var(--radius-md); max-width: 300px;
+        }
+
+        .glass-dark {
+            background: rgba(13, 45, 56, 0.85); border: 1px solid rgba(201, 169, 98, 0.15);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px; border-radius: var(--radius-md); max-width: 300px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="ds-sidebar">
+        <div class="ds-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#c9a962" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Design System
+        </div>
+        
+        <nav class="ds-nav">
+            <a href="#cores" class="ds-nav-link active">Cores & Gradients</a>
+            <a href="#tipografia" class="ds-nav-link">Tipografia</a>
+            <a href="#botoes" class="ds-nav-link">Botões & Ações</a>
+            <a href="#elementos" class="ds-nav-link">Elementos Visuais</a>
+            <a href="#cards" class="ds-nav-link">Cards (Hover)</a>
+            <a href="#glass" class="ds-nav-link">Glassmorphism</a>
+        </nav>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="ds-main">
+        
+        <!-- CORES -->
+        <section id="cores" class="ds-section">
+            <h2 class="ds-section-title">Cores & Gradients</h2>
+            <p class="ds-section-desc">Paleta cromática focada na sobriedade jurídica (Teal Profundo) conectada com a agressividade elegante do Ouro Velho/Cobre.</p>
+
+            <h3 style="margin-bottom: 16px; font-family: var(--font-display);">Primárias (Dark Teal)</h3>
+            <div class="color-grid" style="margin-bottom: 40px;">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--color-primary-darker);"></div>
+                    <div class="color-info"><div class="color-name">Primary Darker</div><div class="color-hex">#061a21</div><div class="color-hex" style="margin-top:4px;">var(--color-primary-darker)</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--color-primary-dark);"></div>
+                    <div class="color-info"><div class="color-name">Primary Dark</div><div class="color-hex">#0d2d38</div><div class="color-hex" style="margin-top:4px;">var(--color-primary-dark)</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--color-primary);"></div>
+                    <div class="color-info"><div class="color-name">Primary Base</div><div class="color-hex">#1a4a5a</div><div class="color-hex" style="margin-top:4px;">var(--color-primary)</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--color-primary-light);"></div>
+                    <div class="color-info"><div class="color-name">Primary Light</div><div class="color-hex">#2d6a7a</div><div class="color-hex" style="margin-top:4px;">var(--color-primary-light)</div></div>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 16px; font-family: var(--font-display);">Destaques (Gold & Copper)</h3>
+            <div class="color-grid" style="margin-bottom: 40px;">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--color-gold-dark);"></div>
+                    <div class="color-info"><div class="color-name">Gold Dark</div><div class="color-hex">#a68a4a</div><div class="color-hex" style="margin-top:4px;">var(--color-gold-dark)</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--color-gold);"></div>
+                    <div class="color-info"><div class="color-name">Gold Base</div><div class="color-hex">#c9a962</div><div class="color-hex" style="margin-top:4px;">var(--color-gold)</div></div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: var(--color-gold-light);"></div>
+                    <div class="color-info"><div class="color-name">Gold Light</div><div class="color-hex">#e0c078</div><div class="color-hex" style="margin-top:4px;">var(--color-gold-light)</div></div>
+                </div>
+                <div class="color-card" style="box-shadow: var(--shadow-gold);">
+                    <div class="color-swatch" style="background: var(--gradient-gold);"></div>
+                    <div class="color-info"><div class="color-name">Gradient Gold</div><div class="color-hex">135deg Gradient</div><div class="color-hex" style="margin-top:4px;">var(--gradient-gold)</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIPOGRAFIA -->
+        <section id="tipografia" class="ds-section">
+            <h2 class="ds-section-title">Tipografia</h2>
+            <p class="ds-section-desc">Uma combinação clássica e moderna: <strong>Playfair Display</strong> para autoridade nos títulos, <strong>Inter</strong> para legibilidade absoluta e <strong>Crimson Pro</strong> para sofisticação em citações.</p>
+
+            <div class="type-specimen">
+                <div class="type-header">Display Font (Playfair Display, Serif)</div>
+                <div class="type-body">
+                    <div class="type-display">Excelência Jurídica</div>
+                    <div class="type-h2">Áreas de Atuação</div>
+                </div>
+            </div>
+
+            <div class="type-specimen">
+                <div class="type-header">Body Font (Inter, Sans-serif)</div>
+                <div class="type-body">
+                    <div class="type-large">Defendemos os direitos de nossos clientes com responsabilidade, transparência e alta dedicação técnica. Atendimento especializado em todo o RJ.</div>
+                    <div class="type-base" style="margin-top: 16px;">O escritório conta com um time multidisciplinar focado em apresentar os melhores resultados judiciais e extrajudiciais para empresas e pessoas físicas.</div>
+                </div>
+            </div>
+
+            <div class="type-specimen">
+                <div class="type-header">Accent Font (Crimson Pro, Serif Italic)</div>
+                <div class="type-body">
+                    <div class="type-accent">"A justiça é o pilar fundamental que sustenta o equilíbrio e a paz nas relações sociais e comerciais de nossa sociedade contemporânea."</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTÕES -->
+        <section id="botoes" class="ds-section">
+            <h2 class="ds-section-title">Botões & Ações</h2>
+            <p class="ds-section-desc">Passe o mouse sobre os botões para visualizar efeitos como <code>.metallic-shine</code> e os deslocamentos fluidos do eixo direcional (Magnetic emulation).</p>
+
+            <div class="buttons-showcase">
+                <button class="btn btn-primary metallic-shine">
+                    Agendar Consulta
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button class="btn btn-secondary">Saiba mais →</button>
+                <button class="btn btn-outline">Consultoria Empresarial</button>
+            </div>
+        </section>
+
+        <!-- ELEMENTOS -->
+        <section id="elementos" class="ds-section">
+            <h2 class="ds-section-title">Elementos Visuais Complementares</h2>
+            <p class="ds-section-desc">As Section Tags criam a hierarquia visual em chamadas de atenção verticais.</p>
+
+            <div style="padding: 24px; border: 1px dashed var(--color-border); border-radius: var(--radius-md); background: white;">
+                <span class="section-tag">Nossas Especialidades</span>
+            </div>
+            
+            <div style="padding: 24px; border: 1px solid var(--color-primary-dark); border-radius: var(--radius-md); background: var(--color-primary-darker); margin-top: 16px;">
+                <span class="section-tag">Transparência Em Números</span>
+            </div>
+        </section>
+
+        <!-- CARDS -->
+        <section id="cards" class="ds-section">
+            <h2 class="ds-section-title">Cards Interativos</h2>
+            <p class="ds-section-desc">O card conta com hover dinâmico (`translateY`), reversão de gradiente interno da SVG e expansão da barra dourada no topo (`::before`).</p>
+
+            <div class="cards-showcase">
+                <div class="area-card">
+                    <div class="area-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="grad1" x1="0" y1="0" x2="24" y2="24">
+                                    <stop offset="0%" stop-color="#c9a962" />
+                                    <stop offset="100%" stop-color="#a68a4a" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="3" y="5" width="18" height="12" rx="2" stroke="url(#grad1)" stroke-width="2" fill="none" />
+                            <circle cx="7" cy="17" r="2" fill="url(#grad1)" />
+                            <circle cx="17" cy="17" r="2" fill="url(#grad1)" />
+                            <path d="M3 11h18" stroke="url(#grad1)" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <h3 class="area-title">Direito de Trânsito</h3>
+                    <p class="area-desc">Defesas de autuações, suspensões de CNH, recursos administrativos e judiciais relacionados a infrações.</p>
+                    <a href="#" style="color: var(--color-gold); font-weight: 600; text-decoration: none; font-size: 0.95rem;">Explorar detalhes →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- GLASSMORPHISM -->
+        <section id="glass" class="ds-section">
+            <h2 class="ds-section-title">Glassmorphism Panels</h2>
+            <p class="ds-section-desc">Painéis translúcidos utilizados em sobreposições hero ou modais, com `backdrop-filter: blur(12px)` e bordas sutis.</p>
+
+            <div class="glass-showcase">
+                <div class="glass">
+                    <h3 style="font-family: var(--font-display); color: var(--color-primary-dark); margin-bottom: 8px;">Light Glass</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem;">Ideal para fundos claros ou imagens diurnas mantendo alta legibilidade corporativa.</p>
+                </div>
+
+                <div class="glass-dark">
+                    <h3 style="font-family: var(--font-display); color: var(--color-gold); margin-bottom: 8px;">Dark Glass</h3>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">Perfeito para sobreposições em imagens escuras na área Hero, agregando alto peso luxuoso à interface.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Interações básicas do sidebar
+        const sections = document.querySelectorAll('.ds-section');
+        const navLinks = document.querySelectorAll('.ds-nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
