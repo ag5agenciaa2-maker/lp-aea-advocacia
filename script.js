@@ -460,3 +460,34 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
+
+// ========== Galeria Sobre: troca de imagem principal ==========
+(function () {
+    const mainImg = document.getElementById('sobre-image-main');
+    const thumbs = document.querySelectorAll('.sobre-thumb');
+    if (!mainImg || !thumbs.length) return;
+
+    thumbs.forEach((thumb) => {
+        thumb.addEventListener('click', () => {
+            const src = thumb.dataset.src;
+            const alt = thumb.dataset.alt || '';
+            const position = thumb.dataset.position || 'center 30%';
+            if (!src || mainImg.src.endsWith(src)) return;
+
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = src;
+                mainImg.alt = alt;
+                mainImg.style.objectPosition = position;
+                mainImg.style.opacity = '1';
+            }, 180);
+
+            thumbs.forEach((t) => {
+                t.classList.remove('is-active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            thumb.classList.add('is-active');
+            thumb.setAttribute('aria-selected', 'true');
+        });
+    });
+})();

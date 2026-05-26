@@ -452,7 +452,8 @@ address {
     margin-top: 20px;
     border-radius: 12px;
     overflow: hidden;
-    height: 260px;
+    aspect-ratio: 3 / 4;
+    max-height: 480px;
     border: 2px solid rgba(201, 169, 98, 0.3);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
@@ -461,7 +462,7 @@ address {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 45%;
+    object-position: center 18%;
     filter: grayscale(0.2) contrast(1.05) brightness(0.85);
   }
 
@@ -471,15 +472,14 @@ address {
   }
 
   /* Sobre image smaller on mobile */
-  .sobre-image-wrapper {
-    max-height: 300px;
-    overflow: hidden;
+  .sobre-image {
+    height: 360px;
+    object-position: center 40%;
   }
 
-  .sobre-image {
-    max-height: 300px;
-    object-fit: cover;
-    object-position: center 30%;
+  .sobre-thumbs {
+    gap: 8px;
+    margin-top: 12px;
   }
 }
 
@@ -931,7 +931,7 @@ address {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center top;
   filter: grayscale(0.3) contrast(1.1) brightness(0.5);
   mask-image: linear-gradient(to right, transparent 0%, black 40%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
@@ -1134,8 +1134,72 @@ address {
   position: relative;
   z-index: 1;
   width: 100%;
+  height: 480px;
+  object-fit: cover;
+  object-position: center 45%;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
+  transition: opacity 0.25s ease;
+}
+
+/* Galeria de thumbs abaixo da imagem principal */
+.sobre-thumbs {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.sobre-thumb {
+  position: relative;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: var(--color-bg-section);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sobre-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  transition: transform 0.4s ease;
+}
+
+/* Ponto focal por foto (% vertical onde o rosto fica visível) */
+.sobre-thumb:nth-child(1) img {
+  object-position: center 18%;
+}
+.sobre-thumb:nth-child(2) img {
+  object-position: center 12%;
+}
+.sobre-thumb:nth-child(3) img {
+  object-position: center 15%;
+}
+
+.sobre-thumb:hover {
+  border-color: rgba(201, 169, 98, 0.45);
+  transform: translateY(-2px);
+}
+
+.sobre-thumb:hover img {
+  transform: scale(1.06);
+}
+
+.sobre-thumb.is-active {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 1px var(--color-gold), 0 6px 16px rgba(201, 169, 98, 0.25);
+}
+
+.sobre-thumb:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
 }
 
 .sobre-content {
@@ -1728,7 +1792,8 @@ address {
   .hero-image-wrapper {
     position: relative;
     width: 100%;
-    height: 600px;
+    aspect-ratio: 3 / 4;
+    max-height: 720px;
     border-radius: var(--radius-lg);
     overflow: hidden;
   }
@@ -1736,7 +1801,8 @@ address {
   .hero-image {
     mask-image: none;
     -webkit-mask-image: none;
-    filter: grayscale(0.2) contrast(1.05) brightness(0.8);
+    object-position: center 5%;
+    filter: grayscale(0.2) contrast(1.05) brightness(0.85);
   }
 
   .sobre-grid {
