@@ -464,6 +464,7 @@ function debounce(func, wait) {
 // ========== Galeria Sobre: troca de imagem principal ==========
 (function () {
     const mainImg = document.getElementById('sobre-image-main');
+    const badge = document.getElementById('sobre-image-badge');
     const thumbs = document.querySelectorAll('.sobre-thumb');
     if (!mainImg || !thumbs.length) return;
 
@@ -472,14 +473,20 @@ function debounce(func, wait) {
             const src = thumb.dataset.src;
             const alt = thumb.dataset.alt || '';
             const position = thumb.dataset.position || 'center 30%';
+            const name = thumb.dataset.name || '';
             if (!src || mainImg.src.endsWith(src)) return;
 
             mainImg.style.opacity = '0';
+            if (badge) badge.style.opacity = '0';
             setTimeout(() => {
                 mainImg.src = src;
                 mainImg.alt = alt;
                 mainImg.style.objectPosition = position;
                 mainImg.style.opacity = '1';
+                if (badge && name) {
+                    badge.textContent = name;
+                    badge.style.opacity = '1';
+                }
             }, 180);
 
             thumbs.forEach((t) => {
