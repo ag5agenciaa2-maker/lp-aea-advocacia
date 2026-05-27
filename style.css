@@ -474,7 +474,7 @@ address {
   /* Sobre image smaller on mobile */
   .sobre-image {
     height: 360px;
-    object-position: center 70%;
+    object-position: center 25%;
   }
 
   .sobre-thumbs {
@@ -1174,16 +1174,16 @@ address {
 
 /* Cada thumb tem ponto focal próprio (% vertical onde fica o rosto) */
 .sobre-thumb:nth-child(1) img {
-  object-position: center 65%;
-}
-.sobre-thumb:nth-child(2) img {
-  object-position: center 28%;
-}
-.sobre-thumb:nth-child(3) img {
   object-position: center 25%;
 }
+.sobre-thumb:nth-child(2) img {
+  object-position: center 25%;
+}
+.sobre-thumb:nth-child(3) img {
+  object-position: center 10%;
+}
 .sobre-thumb:nth-child(4) img {
-  object-position: center 28%;
+  object-position: center 65%;
 }
 
 .sobre-thumb:hover {
