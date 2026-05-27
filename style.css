@@ -1143,6 +1143,16 @@ address {
   z-index: 0;
 }
 
+/* Container da imagem principal — âncora do balão (não inclui as thumbs) */
+.sobre-image-main-wrap {
+  position: relative;
+  z-index: 1;
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
 .sobre-image {
   position: relative;
   z-index: 1;
@@ -1151,7 +1161,6 @@ address {
   object-fit: cover;
   object-position: center 25%;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
   transition: opacity 0.25s ease;
 }
 
