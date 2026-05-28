@@ -905,6 +905,69 @@ address {
   margin-top: 0.5rem;
 }
 
+/* ===== Animação typewriter no destaque do H1 ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-title .typewriter {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: max-content;
+    border-right: 2px solid var(--color-gold);
+    width: 0;
+    animation:
+      typewriterReveal 2.4s steps(26, end) 0.6s forwards,
+      typewriterCaret 0.8s step-end 0.6s 4,
+      typewriterCaretFade 0.4s ease 3.4s forwards;
+  }
+
+  /* Subtítulo entra suavemente depois que o typewriter acaba (≈ 0.6s delay + 2.4s = 3s) */
+  .hero-subtitle--after-type {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: subtitleFadeIn 0.7s ease-out 3.1s forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title .typewriter {
+    display: block;
+  }
+  .hero-subtitle--after-type {
+    opacity: 1;
+  }
+}
+
+@keyframes typewriterReveal {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes typewriterCaret {
+  0%, 100% {
+    border-right-color: var(--color-gold);
+  }
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+@keyframes typewriterCaretFade {
+  to {
+    border-right-color: transparent;
+  }
+}
+
+@keyframes subtitleFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Subtítulo Hero */
 .hero-subtitle {
   font-size: var(--text-body-lg);

@@ -35,8 +35,8 @@
   <meta name="twitter:image" content="https://www.aeaadvocacia.ag5agencia.site/Fotos/hero-advogado.webp">
 
   <!-- Favicon - otimizado -->
-  <link rel="icon" type="image/webp" sizes="32x32" href="Fotos/logo-aa.webp">
-  <link rel="apple-touch-icon" sizes="180x180" href="Fotos/logo-aa.webp">
+  <link rel="icon" type="image/webp" sizes="32x32" href="Fotos/logo-aa-sm.webp">
+  <link rel="apple-touch-icon" sizes="180x180" href="Fotos/logo-aa-sm.webp">
 
   <!-- Theme color para navegadores mobile -->
   <meta name="theme-color" content="#0d2d38">
@@ -45,8 +45,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Preload da imagem hero (LCP) -->
-  <link rel="preload" href="Fotos/hero-advogado.webp" as="image" fetchpriority="high">
+  <!-- Preload da imagem hero (LCP) — responsivo -->
+  <link rel="preload" as="image" fetchpriority="high"
+    imagesrcset="Fotos/hero-advogado-sm.webp 400w, Fotos/hero-advogado.webp 648w"
+    imagesizes="(min-width: 768px) 50vw, 100vw">
 
   <!-- Fonts otimizadas - carregamento assíncrono para não bloquear renderização -->
   <link rel="stylesheet"
@@ -426,7 +428,7 @@
   <header class="header" id="home">
     <div class="container header-inner">
       <a href="#home" class="header-logo" aria-label="Ir para o topo da página">
-        <img src="Fotos/logo-aa.webp" alt="A&A Advocacia" width="50" height="50" loading="eager"
+        <img src="Fotos/logo-aa-sm.webp" alt="A&A Advocacia" width="50" height="50" loading="eager"
           fetchpriority="high">
       </a>
 
@@ -464,7 +466,7 @@
     <div class="mobile-menu" id="mobile-menu" aria-label="Menu mobile" aria-hidden="true" inert>
       <div class="mobile-menu-header">
         <div class="header-logo">
-          <img src="Fotos/logo-aa.webp" alt="A&A Advocacia" width="40" height="40" loading="eager">
+          <img src="Fotos/logo-aa-sm.webp" alt="A&A Advocacia" width="40" height="40" loading="eager">
         </div>
       </div>
       <nav class="mobile-menu-nav" aria-label="Navegação mobile">
@@ -493,11 +495,12 @@
             <span>A&A - Escritório de Advocacia em Campo Grande - RJ</span>
           </div>
 
-          <h1 class="hero-title reveal">
-            Atuação jurídica <span class="text-accent">Especializada e Humanizada</span>
+          <h1 class="hero-title reveal" aria-label="Atuação jurídica Especializada e Humanizada">
+            <span aria-hidden="true">Atuação jurídica </span>
+            <span class="text-accent typewriter" aria-hidden="true">Especializada e Humanizada</span>
           </h1>
 
-          <p class="hero-subtitle reveal">
+          <p class="hero-subtitle reveal hero-subtitle--after-type">
             Atendimento especializado em Direito de Trânsito, Trabalho, Família,
             Responsabilidade Civil, Criminal e Previdenciário. Atuação pautada pela ética profissional e conformidade
             com
@@ -518,7 +521,9 @@
 
           <!-- Imagem Mobile: aparece abaixo do botão apenas no mobile -->
           <div class="hero-image-mobile">
-            <img src="Fotos/hero-advogado.webp"
+            <img src="Fotos/hero-advogado-sm.webp"
+              srcset="Fotos/hero-advogado-sm.webp 400w, Fotos/hero-advogado.webp 648w"
+              sizes="(max-width: 767px) 100vw, 50vw"
               alt="Dr. Marcio José Alcides - Advogado da A&A Advocacia Especializada" class="hero-image-mobile-img"
               width="800" height="1000" loading="eager" fetchpriority="high" decoding="async">
           </div>
@@ -527,6 +532,8 @@
         <!-- Imagem Hero Desktop -->
         <div class="hero-image-wrapper reveal-right">
           <img src="Fotos/hero-advogado.webp"
+            srcset="Fotos/hero-advogado-sm.webp 400w, Fotos/hero-advogado.webp 648w"
+            sizes="(min-width: 768px) 50vw, 100vw"
             alt="Dr. Marcio José Alcides - Advogado da A&A Advocacia Especializada" class="hero-image" width="800"
             height="1000" loading="eager" fetchpriority="high" decoding="async">
         </div>
@@ -546,7 +553,7 @@
       <div class="container">
         <span class="section-tag reveal">O que vivemos diariamente</span>
         <h2 class="section-title reveal">A pressão jurídica não espera. <span class="text-gold">Nós também não.</span></h2>
-        <p class="pain-intro reveal">Reconhecemos o desconforto antes da estratégia — e respondemos com clareza,
+        <p class="pain-intro reveal">Reconhecemos o desconforto antes da estratégia e respondemos com clareza,
           técnica e direção.</p>
 
         <div class="pain-solution-grid">
@@ -1292,7 +1299,7 @@
       <!-- Coluna 1: Marca -->
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="Fotos/logo-aa.webp" alt="A&A Advocacia" width="50" height="50" loading="lazy" decoding="async">
+          <img src="Fotos/logo-aa-sm.webp" alt="A&A Advocacia" width="50" height="50" loading="lazy" decoding="async">
           <span class="footer-logo-text">A&A Advocacia</span>
         </div>
         <p>Escritório de advocacia especializada em soluções jurídicas na Zona Oeste do Rio de Janeiro. Atuação
